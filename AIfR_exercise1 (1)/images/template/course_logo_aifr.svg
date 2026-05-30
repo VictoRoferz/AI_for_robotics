@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 2000">
+  <defs>
+    <style>
+      .cell   { fill: rgba(245,240,245,0.72); }
+      .cell-p { fill: #7eecdf; }
+      .cell-k { fill: #bf5fcf; }
+
+      .lnk    { fill: none; stroke: #f5f0f5; stroke-linecap: round; stroke-linejoin: round; }
+      .jnt    { fill: #f5f0f5; }
+      .jnt-hl { fill: #7eecdf; }
+      .grip   { fill: none; stroke: #7eecdf; stroke-width: 52; stroke-linecap: round; }
+      .tgt    { fill: #bf5fcf; }
+
+      .wl     { fill: none; stroke: #f5f0f5; stroke-width: 20; stroke-opacity: 0.32; }
+      .wl-a   { fill: none; stroke: #7eecdf; stroke-width: 27; }
+      .wn     { fill: #f5f0f5; }
+      .wn-a   { fill: #7eecdf; }
+      .wn-o   { fill: #bf5fcf; }
+    </style>
+  </defs>
+
+  <!-- ── Background ── -->
+  <rect fill="#4a1060" width="2000" height="2000" rx="376" ry="376"/>
+
+  <!-- ══════════════════════════════════════════
+       GRID  (top-left)  —  A* path finding
+       5×5, cell=136, pitch=150, origin=(232,163)
+       Path: diagonal top-left → bottom-right
+  ══════════════════════════════════════════ -->
+
+  <!-- Row 0 -->
+  <rect class="cell-k" x="232" y="163" width="136" height="136" rx="14"/><!-- S -->
+  <rect class="cell-p" x="382" y="163" width="136" height="136" rx="14"/>
+  <rect class="cell"   x="532" y="163" width="136" height="136" rx="14"/>
+  <rect class="cell"   x="682" y="163" width="136" height="136" rx="14"/>
+  <rect class="cell"   x="832" y="163" width="136" height="136" rx="14"/>
+  <!-- Row 1 -->
+  <rect class="cell"   x="232" y="313" width="136" height="136" rx="14"/>
+  <rect class="cell-p" x="382" y="313" width="136" height="136" rx="14"/>
+  <rect class="cell-p" x="532" y="313" width="136" height="136" rx="14"/>
+  <rect class="cell"   x="682" y="313" width="136" height="136" rx="14"/>
+  <rect class="cell"   x="832" y="313" width="136" height="136" rx="14"/>
+  <!-- Row 2 -->
+  <rect class="cell"   x="232" y="463" width="136" height="136" rx="14"/>
+  <rect class="cell"   x="382" y="463" width="136" height="136" rx="14"/>
+  <rect class="cell-p" x="532" y="463" width="136" height="136" rx="14"/>
+  <rect class="cell-p" x="682" y="463" width="136" height="136" rx="14"/>
+  <rect class="cell"   x="832" y="463" width="136" height="136" rx="14"/>
+  <!-- Row 3 -->
+  <rect class="cell"   x="232" y="613" width="136" height="136" rx="14"/>
+  <rect class="cell"   x="382" y="613" width="136" height="136" rx="14"/>
+  <rect class="cell"   x="532" y="613" width="136" height="136" rx="14"/>
+  <rect class="cell-p" x="682" y="613" width="136" height="136" rx="14"/>
+  <rect class="cell-p" x="832" y="613" width="136" height="136" rx="14"/>
+  <!-- Row 4 -->
+  <rect class="cell"   x="232" y="763" width="136" height="136" rx="14"/>
+  <rect class="cell"   x="382" y="763" width="136" height="136" rx="14"/>
+  <rect class="cell"   x="532" y="763" width="136" height="136" rx="14"/>
+  <rect class="cell"   x="682" y="763" width="136" height="136" rx="14"/>
+  <rect class="cell-k" x="832" y="763" width="136" height="136" rx="14"/><!-- G -->
+
+  <!-- ══════════════════════════════════════════
+       NEURAL NETWORK  (bottom-left)  —  RL/PPO
+       2-3-1 feedforward; active path in cyan
+       I: x=280   H: x=580   O: x=880
+  ══════════════════════════════════════════ -->
+
+  <!-- Connections — passive -->
+  <line class="wl"  x1="280" y1="1340" x2="580" y2="1140"/>
+  <line class="wl"  x1="280" y1="1340" x2="580" y2="1500"/>
+  <line class="wl"  x1="280" y1="1340" x2="580" y2="1860"/>
+  <line class="wl"  x1="280" y1="1660" x2="580" y2="1140"/>
+  <line class="wl"  x1="280" y1="1660" x2="580" y2="1860"/>
+  <line class="wl"  x1="580" y1="1140" x2="880" y2="1500"/>
+  <line class="wl"  x1="580" y1="1860" x2="880" y2="1500"/>
+
+  <!-- Connections — active (I2 → H2 → O) -->
+  <line class="wl-a" x1="280" y1="1660" x2="580" y2="1500"/>
+  <line class="wl-a" x1="580" y1="1500" x2="880" y2="1500"/>
+
+  <!-- Input nodes -->
+  <circle class="wn"   cx="280" cy="1340" r="60"/>
+  <circle class="wn-a" cx="280" cy="1660" r="60"/>
+  <!-- Hidden nodes -->
+  <circle class="wn"   cx="580" cy="1140" r="60"/>
+  <circle class="wn-a" cx="580" cy="1500" r="60"/>
+  <circle class="wn"   cx="580" cy="1860" r="60"/>
+  <!-- Output node -->
+  <circle class="wn-o" cx="880" cy="1500" r="76"/>
+
+  <!-- ══════════════════════════════════════════
+       ROBOT ARM  (right)  —  manipulation / TAMP
+       4-segment arm, joints as circles,
+       gripper reaching for a violet target
+  ══════════════════════════════════════════ -->
+
+  <!-- Base plate -->
+  <rect class="jnt" x="1330" y="1740" width="300" height="96" rx="22"/>
+
+  <!-- Links -->
+  <line class="lnk" style="stroke-width:84" x1="1480" y1="1770" x2="1480" y2="1420"/>
+  <line class="lnk" style="stroke-width:78" x1="1480" y1="1420" x2="1240" y2="1080"/>
+  <line class="lnk" style="stroke-width:72" x1="1240" y1="1080" x2="1560" y2="730"/>
+  <line class="lnk" style="stroke-width:64" x1="1560" y1="730"  x2="1730" y2="490"/>
+
+  <!-- Joints -->
+  <circle class="jnt"    cx="1480" cy="1770" r="74"/>
+  <circle class="jnt"    cx="1480" cy="1420" r="68"/>
+  <circle class="jnt"    cx="1240" cy="1080" r="68"/>
+  <circle class="jnt"    cx="1560" cy="730"  r="62"/>
+  <circle class="jnt-hl" cx="1730" cy="490"  r="58"/>
+
+  <!-- Gripper -->
+  <line class="grip" x1="1730" y1="490" x2="1645" y2="330"/>
+  <line class="grip" x1="1730" y1="490" x2="1820" y2="330"/>
+
+  <!-- Target object being grasped -->
+  <rect class="tgt" x="1648" y="255" width="160" height="76" rx="16"/>
+
+</svg>

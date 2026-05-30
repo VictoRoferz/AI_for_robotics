@@ -1,0 +1,19 @@
+# Python virtual environment (never commit — it's huge and machine-specific)
+venv/
+*/venv/
+**/venv/
+
+# Python caches / build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# macOS junk
+.DS_Store
+
+# Embedded clone of the tampanda repo (re-clone separately, not part of your work)
+AIfR_exercise1 (1)/test/
+
+# Large course PDFs (optional — remove these lines if you want them backed up)
+*.pdf
