@@ -175,6 +175,7 @@ class Lidar:
             self._body_exclude_id,
             self._geomid_buf,
             self._dist_buf,
+            None,                    # normal (required positional in mujoco >= 3.x; unused here)
             self._n_total,
             self._range_max,         # cutoff distance
         )
